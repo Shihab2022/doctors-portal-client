@@ -4,7 +4,7 @@ import appointment from "../../assets/images/appointment.png";
 import CustomBtn from "../Sherad/CustomBtn";
 const Appointment = () => {
   return (
-    <div class='flex  justify-center py-10 lg:h-[500px] items-center my-40' style={{background: `url(${appointment})`}}>
+    <div class='flex  justify-center py-10 lg:h-[500px] items-center lg:my-0 lg:mt-40 my-14' style={{background: `url(${appointment})`}}>
      
         <div class="lg:flex-1">
           <img src={doctor} class='mt-[-180px] hidden lg:block' alt="Album" />
