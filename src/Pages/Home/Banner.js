@@ -1,17 +1,18 @@
 import React from 'react';
 import chair from '../../assets/images/chair.png'
 import bg from '../../assets/images/bg.png'
+import CustomBtn from '../Sherad/CustomBtn';
 const Banner = () => {
     return (
        <>
        
        <div style={{backgroundImage: `url(${bg})`}} class="hero min-h-screen ">
   <div class="hero-content flex-col lg:flex-row-reverse">
-    <img src={chair} class="max-w-lg md:h-full rounded-lg shadow-2xl" alt="" />
+    <img src={chair} class="max-w-lg  rounded-lg shadow-2xl" alt="" />
     <div>
-      <h1 class="text-5xl font-bold">Your New Smile Starts Here</h1>
+      <h1 class="text-3xl md:text-5xl font-bold">Your New Smile Starts Here</h1>
       <p class="py-6">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the</p>
-      <button class="btn border-0  font-bold text-white bg-gradient-to-r from-primary to-secondary">Get Started</button>
+     <CustomBtn>GET STARTED</CustomBtn>
     </div>
   </div>
 </div>
