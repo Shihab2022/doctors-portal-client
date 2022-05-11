@@ -25,7 +25,7 @@ const Footer = () => {
   </div>
   </div>
   <div>
-    <p class='text-center py-10'>Copyright © 2022 - All right reserved by ACME Industries Ltd</p>
+    <p class='text-center py-10'>Copyright © 2022 - All right reserved by SHIHAB</p>
   </div>
 </footer>
 

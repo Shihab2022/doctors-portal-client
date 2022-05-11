@@ -1,6 +1,6 @@
 import React from 'react';
 import Footer from '../Sherad/Footer';
-import Appointment from './Appointment';
+import Appointment from './MakeAppointment';
 import Banner from './Banner';
 import ContactUs from './ContactUs';
 import Info from './Info';
