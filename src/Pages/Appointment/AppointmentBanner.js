@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import bg from '../../assets/images/bg.png'
 import chair from '../../assets/images/chair.png'
 import {DayPicker} from 'react-day-picker';
 
 import 'react-day-picker/dist/style.css';
-import { format } from 'date-fns';
-const AppointmentBanner = () => {
-    const [selectedDate,setSelectedDate]=useState(new Date())
+
+const AppointmentBanner = ({selectedDate,setSelectedDate}) => {
+
     
     return (
         <>
@@ -21,7 +21,7 @@ const AppointmentBanner = () => {
        selected={selectedDate}
        onSelect={setSelectedDate}
      />
-     <p>Your Seclected date : {format(selectedDate, 'PP')}</p>
+
      </div>
 
    </div>
