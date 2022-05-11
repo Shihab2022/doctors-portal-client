@@ -13,7 +13,7 @@ const Info = () => {
     {id:3,img:phone,bgColor:'bg-gradient-to-r from-primary to-secondary',titel:'Contact us now',about:'+000 123 456789'},
   ]  
     return (
-        <div class="grid grid-cols-1 lg:grid-cols-3 md:gap-10 gap-5 ">
+        <div className="grid grid-cols-1 lg:grid-cols-3 md:gap-10 gap-5 ">
             {
                 infoData.map(data=><InfoDetails data={data} key={data.id}></InfoDetails>)
             }
