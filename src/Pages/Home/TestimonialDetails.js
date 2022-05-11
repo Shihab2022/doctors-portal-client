@@ -12,7 +12,7 @@ const TestimonialDetails = ({ data }) => {
             <img src={img} alt="Shoes" />
           </div>
           <div className='ml-5 '>
-            <h2 className="card-title">{name}</h2>
+            <h2 className="card-title text-primary">{name}</h2>
             <h2 className="card-title">{location}</h2>
           </div>
         </div>
