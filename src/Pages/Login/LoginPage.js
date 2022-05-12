@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init'
 import Spinner from "../Sherad/Spinner";
 import { Link } from "react-router-dom";
@@ -8,23 +8,26 @@ import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   const { register, formState: { errors }, handleSubmit } = useForm();
-  const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+  const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
+  const [signInWithEmailAndPassword,user,loading,error,] = useSignInWithEmailAndPassword(auth);
 
-if(loading){
+  let userError
+if(loading || googleLoading){
     return <Spinner></Spinner>
 }
-if(error){
+if(error || googleError){
+    userError=<p className="text-sm text-red-500 mb-2">{error?.message || googleError?.message}</p>
     console.log(error)
 }
   const onSubmit = (data) => {
-    console.log(data.email,data.password);
+    signInWithEmailAndPassword(data.email,data.password);
   };
-  if(user){
-      console.log(user)
+  if(user ||googleUser){
+      console.log(user ,googleUser)
   }
   return (
     <div className="flex justify-center h-screen items-center">
-        <div class="card shadow-2xl w-4/12 ">
+        <div class="card shadow-2xl w-full lg:w-4/12 ">
   <div class="card-body ">
    <h1 className="text-3xl font-bold text-center uppercase text-primary">login </h1>
   <form onSubmit={handleSubmit(onSubmit)}>
@@ -81,7 +84,7 @@ if(error){
         {errors?.password?.type==='minLength' && <span className="text-red-500 label-text-alt">{errors.password.message}</span>}
         </label>
 
-    
+    {userError}
         <input className="btn btn-accent text-center w-full" type="submit" />
       </form>
 

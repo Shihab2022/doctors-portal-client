@@ -1,26 +1,34 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init'
 import Spinner from "../Sherad/Spinner";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
-  
-  if(loading){
+    const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
+    const [createUserWithEmailAndPassword,user,loading, error,] = useCreateUserWithEmailAndPassword(auth);
+    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+    const navigate=useNavigate()
+  let userError;
+  if(loading || googleLoading ||updating){
       return <Spinner></Spinner>
   }
-  if(error){
+  if(error || googleError ||updateError){
+    userError=<p className="text-sm text-red-500 mb-2">{error?.message || googleError?.message ||updateError?.message}</p>
       console.log(error)
   }
-    const onSubmit = (data) => {
-      console.log(data.email,data.password);
+    const onSubmit = async (data) => {
+
+        await createUserWithEmailAndPassword(data.email,data.password);
+        await updateProfile({ displayName : data.name });
+        navigate('/appointment')
     };
-    if(user){
-        console.log(user)
+    if(user || googleUser){
+        console.log(user,googleUser)
     }
+    console.log(user)
     return (
         <div className="flex justify-center h-screen items-center">
         <div class="card shadow-2xl w-4/12 ">
@@ -69,7 +77,7 @@ const Register = () => {
               },
             pattern: {
               value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-              message: 'Your email is valid .' // JS only: <p>error message</p> TS only support string
+              message: 'Your email is valid .'
             }
           })}
           
@@ -106,7 +114,7 @@ const Register = () => {
         {errors?.password?.type==='required' && <span className="text-red-500 label-text-alt">{errors.password.message}</span>}
         {errors?.password?.type==='minLength' && <span className="text-red-500 label-text-alt">{errors.password.message}</span>}
         </label>
-
+{userError}
     
         <input className="btn btn-accent text-center w-full" type="submit" />
       </form>
