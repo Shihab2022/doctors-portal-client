@@ -5,29 +5,55 @@ import auth from '../../firebase.init'
 import Spinner from "../Sherad/Spinner";
 import { Link } from "react-router-dom";
 
-
-const LoginPage = () => {
-  const { register, formState: { errors }, handleSubmit } = useForm();
-  const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
-
-if(loading){
-    return <Spinner></Spinner>
-}
-if(error){
-    console.log(error)
-}
-  const onSubmit = (data) => {
-    console.log(data.email,data.password);
-  };
-  if(user){
-      console.log(user)
+const Register = () => {
+    const { register, formState: { errors }, handleSubmit } = useForm();
+    const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+  
+  if(loading){
+      return <Spinner></Spinner>
   }
-  return (
-    <div className="flex justify-center h-screen items-center">
+  if(error){
+      console.log(error)
+  }
+    const onSubmit = (data) => {
+      console.log(data.email,data.password);
+    };
+    if(user){
+        console.log(user)
+    }
+    return (
+        <div className="flex justify-center h-screen items-center">
         <div class="card shadow-2xl w-4/12 ">
   <div class="card-body ">
-   <h1 className="text-3xl font-bold text-center uppercase text-primary">login </h1>
+   <h1 className="text-3xl font-bold text-center uppercase text-secondary">Register </h1>
   <form onSubmit={handleSubmit(onSubmit)}>
+  <label className="label">
+          <span className="label-text">Name</span>
+        </label>
+        <input
+         
+          type="text"
+          placeholder="Your Name"
+          className="input input-bordered w-full  max-w-lg"
+          {...register("name", {
+              required: {
+                value: true,
+                message: 'Name is required'
+              },
+              minLength: {
+              value: 3,
+              message: 'Your name must be 3 charecter .' 
+            }
+          })}
+          
+        />
+        <label className="label">
+           
+        {errors?.name?.type==='required' && <span className="text-red-500 label-text-alt">{errors.name.message}</span>}
+        {errors?.name?.type==='minLength' && <span className="text-red-500 label-text-alt">{errors.name.message}</span>}
+        </label>
+
+
         <label className="label">
           <span className="label-text">Email</span>
         </label>
@@ -35,7 +61,7 @@ if(error){
          
           type="email"
           placeholder="Your Email"
-          className="input input-bordered w-full max-w-lg "
+          className="input input-bordered w-full  max-w-lg"
           {...register("email", {
               required: {
                 value: true,
@@ -87,7 +113,7 @@ if(error){
 
       <div class="divider">OR</div>
       <div class="flex justify-between mb-1">
-          <p className="text-sm">Don't have an account? <Link to='/register' className="text-red-500 hover:underline">Register </Link></p>
+          <p className="text-sm">Already have an account? <Link to='/login' className="text-red-500 hover:underline">Login </Link></p>
           <button className="text-sm text-red-500 hover:underline">Reset Password</button>
       </div>
       <p></p>
@@ -96,7 +122,7 @@ if(error){
 </div>
 
     </div>
-  );
+    );
 };
 
-export default LoginPage;
+export default Register;
