@@ -1,8 +1,12 @@
 import { format } from "date-fns";
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../../firebase.init";
 
 const BookingModal = ({ treatment, selectedDate ,setTreatment}) => {
   const { name, slots,_id } = treatment;
+  const [user] = useAuthState(auth);
+  console.log(user.email,user.name,user.displayName)
   const handleSubmit=e=>{
     const slot = e.target.slot.value;
     console.log(_id, name, slot);
@@ -30,27 +34,33 @@ const BookingModal = ({ treatment, selectedDate ,setTreatment}) => {
               disabled
               className="input input-bordered w-full max-w-xs"
             />
-            <select className="select select-bordered w-full max-w-xs">
+          
+            <input
+              type="text"
+              name='name'
+              disabled
+              value={user?.displayName}
+              placeholder="Full Name"
+              className="input input-bordered w-full max-w-xs"
+            />
+          
+            <input
+              type="email"
+              name='email'
+              value={user?.email}
+              disabled
+              placeholder="Your Email"
+              className="input input-bordered w-full max-w-xs"
+            />
+              <select className="select select-bordered w-full max-w-xs">
               {slots.map((slot) => (
                 <option>{slot}</option>
               ))}
             </select>
-            <input
-              type="text"
-              name='name'
-              placeholder="Full Name"
-              className="input input-bordered w-full max-w-xs"
-            />
-            <input
+              <input
               type="number"
               name='number'
               placeholder="Phone Number"
-              className="input input-bordered w-full max-w-xs"
-            />
-            <input
-              type="email"
-              name='email'
-              placeholder="Your Email"
               className="input input-bordered w-full max-w-xs"
             />
             <input
