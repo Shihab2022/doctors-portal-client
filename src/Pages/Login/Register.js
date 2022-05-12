@@ -116,7 +116,7 @@ const Register = () => {
         </label>
 {userError}
     
-        <input className="btn btn-accent text-center w-full" type="submit" />
+        <input className="btn btn-accent text-center w-full" type="submit" value="Register" />
       </form>
 
       <div class="divider">OR</div>
