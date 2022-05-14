@@ -10,8 +10,8 @@ const Navbar = () => {
     const menuItems = <>
     
         <li><CustomLink to='/'>Home</CustomLink></li>
-        <li><CustomLink to='/about'>About </CustomLink></li>
         <li><CustomLink to='/appointment'>Appointment</CustomLink></li>
+        <li><CustomLink to='/about'>About </CustomLink></li>     
         <li><CustomLink to='/reviews'>Reviews</CustomLink></li>
         <li><CustomLink to='/contact'>Contact Us</CustomLink></li>
         <li> {user ?<button onClick={()=> signOut(auth)} class="btn btn-ghost">Log Out</button> :<Link to='/login'>Login </Link>} </li>

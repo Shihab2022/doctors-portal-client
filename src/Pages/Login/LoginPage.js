@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init'
@@ -7,23 +7,29 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 
 const LoginPage = () => {
-  const { register, formState: { errors }, handleSubmit } = useForm();
+  const [yourEmail,setYourEmail]=useState('')
+  const { register,onBlur, formState: { errors }, handleSubmit } = useForm();
   const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
   const [signInWithEmailAndPassword,user,loading,error,] = useSignInWithEmailAndPassword(auth);
-  let userError
   let navigate = useNavigate();
   let location = useLocation();
   let from = location.state?.from?.pathname || "/";
+
+  const onSubmit = (data) => {
+    signInWithEmailAndPassword(data.email,data.password);
+  };
+  const resetYourPassword=()=>{
+console.log(yourEmail,'ok')
+  }
 if(loading || googleLoading){
     return <Spinner></Spinner>
 }
+let userError
 if(error || googleError){
     userError=<p className="text-sm text-red-500 mb-2">{error?.message || googleError?.message}</p>
     console.log(error)
 }
-  const onSubmit = (data) => {
-    signInWithEmailAndPassword(data.email,data.password);
-  };
+
   if(user ||googleUser){
     navigate(from, { replace: true });
   }
@@ -37,7 +43,7 @@ if(error || googleError){
           <span className="label-text">Email</span>
         </label>
         <input
-         
+         onBlur={(e)=>setYourEmail(e.target.value)}
           type="email"
           placeholder="Your Email"
           className="input input-bordered w-full max-w-lg "
@@ -48,7 +54,7 @@ if(error || googleError){
               },
             pattern: {
               value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-              message: 'Your email is valid .' // JS only: <p>error message</p> TS only support string
+              message: 'Your email is valid .' 
             }
           })}
           
@@ -93,7 +99,7 @@ if(error || googleError){
       <div class="divider">OR</div>
       <div class="flex justify-between mb-1">
           <p className="text-sm">Don't have an account? <Link to='/register' className="text-red-500 hover:underline">Register </Link></p>
-          <button className="text-sm text-red-500 hover:underline">Reset Password</button>
+          <button onClick={resetYourPassword} className="text-sm text-red-500 hover:underline">Reset Password</button>
       </div>
       <p></p>
       <button onClick={() =>signInWithGoogle()} className='w-full btn btn-outline btn-accent'>Continue with google</button>

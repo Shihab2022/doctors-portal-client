@@ -2,7 +2,7 @@ import React from 'react';
 import footer from '../../assets/images/footer.png'
 const Footer = () => {
     return (
-        <div className=''>
+        <div className='lg:px-20 px-5'>
             <footer style={{backgroundImage: `url(${footer})` ,backgroundSize:'cover'}}  className="  p-10 lg:pt-48 ">
                 <div className='footer'>
   <div>
