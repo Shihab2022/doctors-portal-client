@@ -14,7 +14,13 @@ const Navbar = () => {
         <li><CustomLink to='/about'>About </CustomLink></li>     
         <li><CustomLink to='/reviews'>Reviews</CustomLink></li>
         <li><CustomLink to='/contact'>Contact Us</CustomLink></li>
-        <li> {user ?<button onClick={()=> signOut(auth)} class="btn btn-ghost">Log Out</button> :<Link to='/login'>Login </Link>} </li>
+        {
+            user && <li><Link to="/dashboard">Dashboard</Link></li>
+        }
+        <li> {user ?<button onClick={()=> {
+          signOut(auth)
+          localStorage.removeItem('accessToken')
+        }} className="btn btn-ghost">Log Out</button> :<Link to='/login'>Login </Link>} </li>
     </>
     return (
         <div className="navbar bg-base-100 md:px-24">

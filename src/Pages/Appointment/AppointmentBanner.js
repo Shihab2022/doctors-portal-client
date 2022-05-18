@@ -5,7 +5,7 @@ import {DayPicker} from 'react-day-picker';
 
 import 'react-day-picker/dist/style.css';
 
-const AppointmentBanner = ({selectedDate,setSelectedDate}) => {
+const AppointmentBanner = ({date,setdate}) => {
 
     
     return (
@@ -18,8 +18,8 @@ const AppointmentBanner = ({selectedDate,setSelectedDate}) => {
    
      <DayPicker 
        mode="single"
-       selected={selectedDate}
-       onSelect={setSelectedDate}
+       selected={date}
+       onSelect={setdate}
      />
 
      </div>

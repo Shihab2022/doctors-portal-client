@@ -4,11 +4,11 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
 import { toast } from "react-toastify";
 
-const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
+const BookingModal = ({ treatment, date, setTreatment }) => {
   const { name, slots, _id } = treatment;
   const [user] = useAuthState(auth);
   // console.log(user.email, user.name, user.displayName);
-  const formateData = format(selectedDate, "pp");
+  const formateData = format(date, "PP");
 
 
   const handleSubmit = (e) => {
@@ -62,7 +62,7 @@ const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
           <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-3 justify-items-center mt-5">
             <input
               type="text"
-              value={format(selectedDate, "PP")}
+              value={format(date, "PP")}
               disabled
               className="input input-bordered w-full max-w-xs"
             />

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init'
 import Spinner from "../Sherad/Spinner";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import useToken from "../hooks/useToken";
 
 
 const LoginPage = () => {
@@ -11,6 +12,7 @@ const LoginPage = () => {
   const { register,onBlur, formState: { errors }, handleSubmit } = useForm();
   const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
   const [signInWithEmailAndPassword,user,loading,error,] = useSignInWithEmailAndPassword(auth);
+  const [token]=useToken(user ||googleUser)
   let navigate = useNavigate();
   let location = useLocation();
   let from = location.state?.from?.pathname || "/";
@@ -21,6 +23,11 @@ const LoginPage = () => {
   const resetYourPassword=()=>{
 console.log(yourEmail,'ok')
   }
+  useEffect(()=>{
+    if(token){
+      navigate(from, { replace: true });
+    }
+  },[token,from,navigate])
 if(loading || googleLoading){
     return <Spinner></Spinner>
 }
@@ -30,13 +37,11 @@ if(error || googleError){
     console.log(error)
 }
 
-  if(user ||googleUser){
-    navigate(from, { replace: true });
-  }
+
   return (
     <div className="flex justify-center h-screen items-center">
-        <div class="card shadow-2xl w-full lg:w-4/12 ">
-  <div class="card-body ">
+        <div className="card shadow-2xl w-full lg:w-4/12 ">
+  <div className="card-body ">
    <h1 className="text-3xl font-bold text-center uppercase text-primary">login </h1>
   <form onSubmit={handleSubmit(onSubmit)}>
         <label className="label">
@@ -96,8 +101,8 @@ if(error || googleError){
         <input className="btn btn-accent text-center w-full" type="submit" value="Login" />
       </form>
 
-      <div class="divider">OR</div>
-      <div class="flex justify-between mb-1">
+      <div className="divider">OR</div>
+      <div className="flex justify-between mb-1">
           <p className="text-sm">Don't have an account? <Link to='/register' className="text-red-500 hover:underline">Register </Link></p>
           <button onClick={resetYourPassword} className="text-sm text-red-500 hover:underline">Reset Password</button>
       </div>
